@@ -1,0 +1,16 @@
+@font-face {
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+  font-family: "Roboto";
+}
+
+body {
+  margin: 0;
+  font-weight: $regular-font;
+  font-family: "Roboto", sans-serif;
+}
+
+h1, h2, h3, p, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
