@@ -1,15 +1,18 @@
-import React from 'react'
+import React from "react";
+// Images
+import searchIcon from "../images/search.svg";
 
-interface Props {
-  
-}
-
-const Navbar = (props: Props) => {
+const Navbar: React.FC<{}> = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <nav className="navbar">
+      <h1 className="logo"> MSR </h1>
+      <div className="search-input">
+        <input type="text" name="search" id="search" />
+        <label htmlFor="search"> Search </label>
+        <img src={searchIcon} alt="search Icon" />
+      </div>
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;
