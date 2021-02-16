@@ -1,0 +1,52 @@
+.navbar {
+  background-color: $main-color;
+  height: 80px;
+  padding: 0 7.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  h1.logo {
+    font-size: $logo-size;
+    font-weight: $bold-font;
+  }
+
+  .search-input {
+    position: relative;
+
+    input {
+      height: 40px;
+      width: 360px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px 3px rgba($color: $black-color, $alpha: 0.25);
+      outline: 0.001px;
+      padding: 0 16px 0 40px;
+      color: $black-color;
+      &:focus + label {
+        opacity: 0;
+      }
+      @media screen and (max-width: 600px) {
+        width: 100px;
+      }
+    }
+
+    label {
+      position: absolute;
+      left: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: $small-size;
+      color: $black-color;
+      transition: all 0.4s ease-in-out;
+    }
+
+    img {
+      position: absolute;
+      left: 16px;
+      margin-right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
