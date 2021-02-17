@@ -39,6 +39,10 @@
       font-size: $small-size;
       color: $black-color;
       transition: all 0.4s ease-in-out;
+
+      &.hidden {
+        opacity: 0;
+      }
     }
 
     img {

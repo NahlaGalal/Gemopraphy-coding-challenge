@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { debounce } from "lodash";
 // Components
 import Navbar from "./components/Navbar";
 import Card from "./components/Card";
@@ -24,15 +25,15 @@ const App: React.FC<{}> = () => {
     .toString()
     .padStart(2, "0")}-${lastMonthDate.getUTCDate()}`;
 
-  const loadMore = () => {
+  const loadMore = (query?: string) => {
     // Start loading
     isLoading.current = true;
     // Fetch data
     axios
       .get(
-        `https://api.github.com/search/repositories?q=created:>${dateString}&sort=stars&order=desc&per_page=20&page=${
-          page.current + 1
-        }`
+        `https://api.github.com/search/repositories?q=${
+          query ? query : `created:>${dateString}`
+        }&sort=stars&order=desc&per_page=20&page=${page.current + 1}`
       )
       .then((res) => {
         let repos: Irepos[] = res.data.items.map((repo: any) => ({
@@ -48,12 +49,20 @@ const App: React.FC<{}> = () => {
         }));
         // Stop loading
         isLoading.current = false;
-        // Add page number
-        page.current++;
-        // Add new data
-        setData([...dataRef.current, ...repos]);
-        dataRef.current = [...dataRef.current, ...repos];
+        if (query) {
+          setData(repos);
+        } else {
+          // Add page number
+          page.current++;
+          // Add new data
+          setData([...dataRef.current, ...repos]);
+          dataRef.current = [...dataRef.current, ...repos];
+        }
       });
+  };
+
+  const searchRepo = (query: string) => {
+    debounce(() => loadMore(query), 500)();
   };
 
   useEffect(() => {
@@ -73,7 +82,7 @@ const App: React.FC<{}> = () => {
   return (
     <div className="App">
       <header>
-        <Navbar />
+        <Navbar searchRepo={searchRepo} />
         <h2>Most Starred Repos</h2>
       </header>
       <main>
