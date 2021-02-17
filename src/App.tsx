@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 // Components
 import Navbar from "./components/Navbar";
@@ -7,19 +7,32 @@ import Card from "./components/Card";
 import Irepos from "./types";
 
 const App: React.FC<{}> = () => {
+  // Repos data
   const [data, setData] = useState<Irepos[]>([]);
+  // Reference for page
+  const page = useRef<number>(0);
+  // Reference for data to save the old data
+  const dataRef = useRef<Irepos[]>([]);
+  // Loading new Data
+  const isLoading = useRef<boolean>(false);
 
-  useEffect(() => {
-    const lastMonthDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-    const dateString = `${lastMonthDate.getFullYear()}-${(
-      lastMonthDate.getUTCMonth() + 1
-    )
-      .toString()
-      .padStart(2, "0")}-${lastMonthDate.getUTCDate()}`;
+  // Calculate last month date to use in query
+  const lastMonthDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const dateString = `${lastMonthDate.getFullYear()}-${(
+    lastMonthDate.getUTCMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}-${lastMonthDate.getUTCDate()}`;
 
+  const loadMore = () => {
+    // Start loading
+    isLoading.current = true;
+    // Fetch data
     axios
       .get(
-        `https://api.github.com/search/repositories?q=created:>${dateString}&sort=stars&order=desc`
+        `https://api.github.com/search/repositories?q=created:>${dateString}&sort=stars&order=desc&per_page=20&page=${
+          page.current + 1
+        }`
       )
       .then((res) => {
         let repos: Irepos[] = res.data.items.map((repo: any) => ({
@@ -33,8 +46,28 @@ const App: React.FC<{}> = () => {
           authorUrl: repo.owner.html_url,
           repoUrl: repo.html_url,
         }));
-        setData(repos);
+        // Stop loading
+        isLoading.current = false;
+        // Add page number
+        page.current++;
+        // Add new data
+        setData([...dataRef.current, ...repos]);
+        dataRef.current = [...dataRef.current, ...repos];
       });
+  };
+
+  useEffect(() => {
+    loadMore();
+    // Event to load data on scrolling
+    window.addEventListener("scroll", () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        // Fetch new data
+        loadMore();
+      }
+    });
   }, []);
 
   return (
@@ -59,6 +92,11 @@ const App: React.FC<{}> = () => {
           />
         ))}
       </main>
+      {isLoading && (
+        <footer>
+          <p>Loading ...</p>
+        </footer>
+      )}
     </div>
   );
 };

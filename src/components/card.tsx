@@ -27,6 +27,7 @@ const Card: React.FC<Props> = ({
         </h3>
         <p>{repoDesc}</p>
         <footer>
+          {/* Number of stars */}
           <div className="label">
             <div>
               <img src={starIcon} alt="Number of stars" />
@@ -34,6 +35,7 @@ const Card: React.FC<Props> = ({
             </div>
             <span>{starCount}</span>
           </div>
+          {/* Number of issues */}
           <div className="label">
             <div>
               <img src={issueIcon} alt="Number of issues" />

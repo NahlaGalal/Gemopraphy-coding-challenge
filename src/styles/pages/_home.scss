@@ -10,4 +10,11 @@
     width: 85%;
     margin: 0 auto;
   }
+
+  > footer {
+    width: 85%;
+    margin: 0 auto 24px;
+    text-align: center;
+    color: $black-color;
+  }
 }
