@@ -26,7 +26,7 @@ const Card: React.FC<Props> = ({
     <section className="repo-card">
       <img src={userAvatar} alt="User avatar" />
       <div className="repo-data">
-        <h2>{repoName}</h2>
+        <h3>{repoName}</h3>
         <p>{repoDesc}</p>
         <footer>
           <div className="label">

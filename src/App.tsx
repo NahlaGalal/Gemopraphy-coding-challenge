@@ -8,7 +8,7 @@ const App: React.FC<{}> = () => {
     <div className="App">
       <header>
         <Navbar />
-        <h1>Most Starred Repos</h1>
+        <h2>Most Starred Repos</h2>
       </header>
       <main>
         <Card
