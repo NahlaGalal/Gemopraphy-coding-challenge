@@ -2,16 +2,8 @@ import React from "react";
 // Images
 import starIcon from "../images/star.svg";
 import issueIcon from "../images/issue.svg";
-
-interface Props {
-  userAvatar: string;
-  repoName: string;
-  repoDesc: string;
-  starCount: number;
-  issuesCount: number;
-  createdAt: Date;
-  author: string;
-}
+// Props interface
+import Props from "../types";
 
 const Card: React.FC<Props> = ({
   userAvatar,
@@ -43,7 +35,7 @@ const Card: React.FC<Props> = ({
             </div>
             <span>{issuesCount}</span>
           </div>
-          <p>Submitted {createdAt.getHours()} days ago by <span>{author}</span></p>
+          <p>Submitted {new Date(Date.now() - createdAt.getTime()).getDate()} days ago by <span>{author}</span></p>
         </footer>
       </div>
     </section>

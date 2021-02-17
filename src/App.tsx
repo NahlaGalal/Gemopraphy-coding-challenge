@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // Components
 import Navbar from "./components/Navbar";
 import Card from "./components/Card";
+// Interface data
+import Irepos from "./types";
 
 const App: React.FC<{}> = () => {
+  const [data, setData] = useState<Irepos[]>([]);
+
+  useEffect(() => {
+    const lastMonthDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const dateString = `${lastMonthDate.getFullYear()}-${
+      (lastMonthDate.getUTCMonth() + 1).toString().padStart(2, '0')
+    }-${lastMonthDate.getUTCDate()}`;
+
+    axios
+      .get(
+        `https://api.github.com/search/repositories?q=created:>${dateString}&sort=stars&order=desc`
+      )
+      .then((res) => {
+        let repos: Irepos[] = res.data.items.map((repo: any) => ({
+          userAvatar: repo.owner.avatar_url,
+          repoName: repo.name,
+          repoDesc: repo.description,
+          starCount: repo.stargazers_count,
+          issuesCount: repo.open_issues_count,
+          createdAt: new Date(repo.created_at),
+          author: repo.owner.login,
+        }));
+        setData(repos);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header>
@@ -11,24 +40,18 @@ const App: React.FC<{}> = () => {
         <h2>Most Starred Repos</h2>
       </header>
       <main>
-        <Card
-          userAvatar="https://via.placeholder.com/175"
-          repoName="Tensor flow"
-          repoDesc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra feugiat sagittis dui interdum. Turpis et risus, faucibus et ultrices mi diam. Volutpat dui vel purus integer ornare pulvinar amet. Purus turpis sagittis, sagittis rhoncus purus nunc feugiat consequat. Tincidunt eu semper nec volutpat morbi. Arcu, donec lorem tortor mauris, nulla. Arcu ridiculus nibh tellus facilisi. Porttitor potenti quam arcu amet, egestas quis odio mi."
-          starCount={2}
-          issuesCount={2}
-          createdAt={new Date()}
-          author="Tensor flow"
-        />
-        <Card
-          userAvatar="https://via.placeholder.com/175"
-          repoName="Tensor flow"
-          repoDesc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra feugiat sagittis dui interdum. Turpis et risus, faucibus et ultrices mi diam. Volutpat dui vel purus integer ornare pulvinar amet. Purus turpis sagittis, sagittis rhoncus purus nunc feugiat consequat. Tincidunt eu semper nec volutpat morbi. Arcu, donec lorem tortor mauris, nulla. Arcu ridiculus nibh tellus facilisi. Porttitor potenti quam arcu amet, egestas quis odio mi."
-          starCount={2}
-          issuesCount={2}
-          createdAt={new Date()}
-          author="Tensor flow"
-        />
+        {data.map((repo) => (
+          <Card
+            key={`${repo.repoName}-${repo.createdAt.toString()}`}
+            userAvatar={repo.userAvatar}
+            repoName={repo.repoName}
+            repoDesc={repo.repoDesc}
+            starCount={repo.starCount}
+            issuesCount={repo.issuesCount}
+            createdAt={repo.createdAt}
+            author={repo.author}
+          />
+        ))}
       </main>
     </div>
   );
