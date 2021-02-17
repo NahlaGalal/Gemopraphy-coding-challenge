@@ -8,12 +8,7 @@ Any user can be able to keep scrolling and new results should appear
 
 - To run the project locally:
 
-        In the server directory, you can run
-
-    #### `npm install`
-    #### `npm start`
-
-        In the client directory, you can run
+        you can run
 
     #### `npm install`
     #### `npm start`
