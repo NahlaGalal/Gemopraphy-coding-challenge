@@ -45,10 +45,14 @@
       margin: 16px 0 8px;
       font-size: $title-size;
       font-weight: $medium-font;
-      color: $text-color;
 
       @media screen and (max-width: 550px) {
         text-align: center;
+      }
+
+      a {
+        color: $text-color;
+        text-decoration: none;
       }
     }
 
@@ -112,9 +116,10 @@
           margin-top: 8px;
         }
 
-        span {
+        a {
           color: $main-color;
           font-weight: $medium-font;
+          text-decoration: none;
         }
       }
     }

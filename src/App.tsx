@@ -11,9 +11,11 @@ const App: React.FC<{}> = () => {
 
   useEffect(() => {
     const lastMonthDate: Date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-    const dateString = `${lastMonthDate.getFullYear()}-${
-      (lastMonthDate.getUTCMonth() + 1).toString().padStart(2, '0')
-    }-${lastMonthDate.getUTCDate()}`;
+    const dateString = `${lastMonthDate.getFullYear()}-${(
+      lastMonthDate.getUTCMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}-${lastMonthDate.getUTCDate()}`;
 
     axios
       .get(
@@ -28,6 +30,8 @@ const App: React.FC<{}> = () => {
           issuesCount: repo.open_issues_count,
           createdAt: new Date(repo.created_at),
           author: repo.owner.login,
+          authorUrl: repo.owner.html_url,
+          repoUrl: repo.html_url,
         }));
         setData(repos);
       });
@@ -50,6 +54,8 @@ const App: React.FC<{}> = () => {
             issuesCount={repo.issuesCount}
             createdAt={repo.createdAt}
             author={repo.author}
+            repoUrl={repo.repoUrl}
+            authorUrl={repo.authorUrl}
           />
         ))}
       </main>

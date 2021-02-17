@@ -13,29 +13,41 @@ const Card: React.FC<Props> = ({
   issuesCount,
   createdAt,
   author,
+  authorUrl,
+  repoUrl,
 }) => {
   return (
     <section className="repo-card">
       <img src={userAvatar} alt="User avatar" />
       <div className="repo-data">
-        <h3>{repoName}</h3>
+        <h3>
+          <a href={repoUrl} target="_blank" rel="noreferrer">
+            {repoName}
+          </a>
+        </h3>
         <p>{repoDesc}</p>
         <footer>
           <div className="label">
             <div>
-              <img src={starIcon} alt="Number of stars"/>
+              <img src={starIcon} alt="Number of stars" />
               <span>Star</span>
             </div>
             <span>{starCount}</span>
           </div>
           <div className="label">
             <div>
-              <img src={issueIcon} alt="Number of issues"/>
+              <img src={issueIcon} alt="Number of issues" />
               <span>Issues</span>
             </div>
             <span>{issuesCount}</span>
           </div>
-          <p>Submitted {new Date(Date.now() - createdAt.getTime()).getDate()} days ago by <span>{author}</span></p>
+          <p>
+            Submitted {new Date(Date.now() - createdAt.getTime()).getDate()}{" "}
+            days ago by{" "}
+            <a href={authorUrl} target="_blank" rel="noreferrer">
+              {author}
+            </a>
+          </p>
         </footer>
       </div>
     </section>

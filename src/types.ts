@@ -6,4 +6,6 @@ export default interface Irepo {
   issuesCount: number;
   createdAt: Date;
   author: string;
+  authorUrl: string;
+  repoUrl: string;
 }
