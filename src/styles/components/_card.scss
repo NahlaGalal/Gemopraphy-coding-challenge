@@ -1,0 +1,84 @@
+.repo-card {
+  width: 85%;
+  margin: 0 auto;
+  height: 175px;
+  display: flex;
+  border-radius: 89px 24px 0 89px;
+  background-color: $white-color;
+  border: 2px solid $main-color;
+  margin-bottom: 24px;
+  padding-right: 16px;
+
+  > img {
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+
+  .repo-data {
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      margin: 16px 0 8px;
+      font-size: $title-size;
+      font-weight: $medium-font;
+      color: $text-color;
+    }
+
+    p {
+      color: $black-color;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    footer {
+      margin: 8px 0 16px;
+      display: flex;
+      align-items: center;
+      margin-top: auto;
+
+      .label {
+        height: 28px;
+        background-color: $secondary-color;
+        border: 1px solid $black-color;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        margin-right: 16px;
+
+        div {
+          display: flex;
+          align-items: center;
+          border-right: 1px solid $black-color;
+          padding: 0 12px;
+          height: 100%;
+
+          span {
+            color: $text-color;
+            margin-left: 4px;
+          }
+        }
+
+        > span {
+          color: $text-color;
+          padding: 0 12px;
+        }
+      }
+
+      p {
+        font-size: $small-size;
+        color: $black-color;
+
+        span {
+          color: $main-color;
+        }
+      }
+    }
+  }
+}

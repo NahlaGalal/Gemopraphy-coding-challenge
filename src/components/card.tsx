@@ -29,14 +29,14 @@ const Card: React.FC<Props> = ({
         <h2>{repoName}</h2>
         <p>{repoDesc}</p>
         <footer>
-          <div className="">
+          <div className="label">
             <div>
               <img src={starIcon} alt="Number of stars"/>
               <span>Star</span>
             </div>
             <span>{starCount}</span>
           </div>
-          <div>
+          <div className="label">
             <div>
               <img src={issueIcon} alt="Number of issues"/>
               <span>Issues</span>
